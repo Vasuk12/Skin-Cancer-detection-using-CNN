@@ -1,63 +1,24 @@
-Skin Cancer Classification using CNN & Transfer Learning
+Skin Cancer Classification using Deep Learning
+Overview
 
-This project builds an end-to-end pipeline to classify different types of skin cancer from clinical images using deep learning. The focus was on creating a reliable, reproducible workflow while handling real dataset challenges such as patient leakage and severe class imbalance.
+This project develops an end-to-end deep learning pipeline to classify different types of skin cancer from clinical images. The focus is on building a reliable and reproducible workflow while addressing real dataset challenges such as class imbalance, patient-level data leakage, and fair evaluation.
 
-🔍 Objective
+Dataset and Preparation
 
-Classify skin cancer images into multiple diagnostic classes using deep learning and evaluate the model fairly and robustly.
+The dataset consists of real clinical skin cancer images along with metadata. The data was cleaned and diagnostic classes were organized meaningfully. A patient-wise split was implemented to ensure that images from the same patient never appear across training, validation, and test sets, preventing leakage and providing an unbiased evaluation setup.
 
-📂 Dataset
+Handling Class Imbalance
 
-Real clinical image dataset (DERM12345)
+The dataset contained significant class imbalance, where certain cancer types had far fewer samples. This was addressed using class-weighted loss during training along with targeted data augmentation applied more heavily to minority classes. These techniques improved recall and stability for under-represented cancer categories and prevented the model from biasing toward majority classes.
 
-Metadata-driven processing
+Model Development
 
-Patient-wise split to avoid leakage
+Two model pipelines were created and compared. The first used a custom CNN designed specifically for the dataset. The second approach used transfer learning with ResNet-18, fine-tuned on the dataset to leverage pretrained feature representations. Both models were trained using a structured training workflow with reproducible data loaders, monitored validation metrics, and automatic saving of the best-performing checkpoints. ResNet-18 demonstrated better generalization and reduced overfitting compared to the custom CNN.
 
-Separate Train / Validation / Test sets
+Evaluation and Results
 
-🧠 Approach
-1️⃣ Data Handling
+Model performance was evaluated using detailed per-class precision, recall, and F1-score, along with confusion matrices and misclassification analysis instead of relying only on overall accuracy. This helped identify performance differences across cancer categories and provided insights into failure patterns. Structured outputs, including reports and visualizations, were generated to validate and analyze the results. The final outcome was a robust classification pipeline with fair evaluation and improved performance on minority cancer classes.
 
-Cleaned metadata and grouped relevant diagnostic classes
+Summary
 
-Implemented patient-wise splitting to avoid the same patient appearing in multiple sets
-
-Created reproducible PyTorch dataset and dataloaders
-
-2️⃣ Handling Class Imbalance
-
-Used class-weighted loss
-
-Applied targeted data augmentation for minority classes
-→ Result: Improved recall and stability on under-represented cancer types
-
-3️⃣ Model Development
-
-Two model pipelines were developed and evaluated:
-
-Custom CNN
-
-ResNet-18 (Transfer Learning)
-
-Training strategy:
-
-Monitored validation performance
-
-Saved best checkpoint
-
-Reduced overfitting using augmentation + weighted learning
-
-4️⃣ Evaluation
-
-Measured:
-
-Per-class Precision, Recall, F1
-
-Confusion Matrix
-
-Misclassification analysis
-
-Exported structured performance reports
-
-→ Result: ResNet-18 provided better generalization and more consistent performance across classes.
+This project demonstrates the design of a practical and reliable deep learning system for medical image classification. It emphasizes correct data handling, responsible evaluation, and engineering discipline rather than only achieving a single performance metric. The work provides a strong base for future extensions such as deployment, ONNX export, performance benchmarking, or integration into clinical workflows.
